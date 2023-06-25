@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      routers:
+        - id: web
+          uri: http://localhost:8080
+          predicates:
+            - Path=/admin/**
