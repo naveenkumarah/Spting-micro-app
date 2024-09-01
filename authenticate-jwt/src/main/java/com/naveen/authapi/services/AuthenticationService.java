@@ -3,6 +3,7 @@ package com.naveen.authapi.services;
 
 import com.naveen.authapi.dtos.LoginUserDto;
 import com.naveen.authapi.dtos.RegisterUserDto;
+import com.naveen.authapi.entities.Role;
 import com.naveen.authapi.entities.User;
 import com.naveen.authapi.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AuthenticationService {
@@ -30,10 +33,13 @@ public class AuthenticationService {
     }
 
     public User signup(RegisterUserDto input) {
-        var user = new User()
-            .setFullName(input.getFullName())
-            .setEmail(input.getEmail())
-            .setPassword(passwordEncoder.encode(input.getPassword()));
+        Set<Role> roleSet =new HashSet<>();
+        roleSet.add(new Role("Admin"));
+
+        var user =  User.builder().email(input.getEmail())
+                .fullName(input.getFullName())
+                .password(passwordEncoder.encode(input.getPassword()))
+                .roles(roleSet).build();
 
         return userRepository.save(user);
     }
