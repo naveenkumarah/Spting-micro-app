@@ -5,6 +5,7 @@ import com.naveen.authapi.repositories.UserRepository;
 import com.naveen.authapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,25 +20,25 @@ import java.util.List;
 @RestController
 public class UserController {
     private final UserService userService;
+    private com.naveen.authapi.entities.User User;
 
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    //@PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/me")
-    @PreAuthorize("hasRole('Admin')")
-    public ResponseEntity<User> authenticatedUser() {
+    public ResponseEntity<String> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        User currentUser = (User) authentication.getPrincipal();
-
-        return ResponseEntity.ok(currentUser);
+        return ResponseEntity.ok((String)authentication.getPrincipal());
     }
 
 
     @GetMapping
-    @PreAuthorize("hasRole('User')")
+    @PreAuthorize("hasAuthority('User')")
+   // @PostFilter()
     public ResponseEntity<List<User>> allUsers() {
         List <User> users = userService.allUsers();
 

@@ -34,15 +34,22 @@ public class AuthApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Role role=new Role("Admin");
-		roleRepository.save(role);
-		Set<Role> roleSet =new HashSet<>();
-		roleSet.add(role);
+
+		Set<Role> roleSet = new HashSet<Role>(){{
+			add(new Role("Admin"));
+			add(new Role("User"));
+		}};
+
+		roleRepository.saveAll(roleSet);
 
 		userRepository.save(User.builder().email("naveen@gmail.com")
 				.fullName("Naveen")
 				.password(passwordEncoder.encode("Password"))
-				.roles(roleSet).build());
+				.roles(roleRepository.findAllByName("Admin")).build());
 
+		userRepository.save(User.builder().email("kumar@gmail.com")
+				.fullName("Kumar")
+				.password(passwordEncoder.encode("Password"))
+				.roles(roleSet).build());
 	}
 }
