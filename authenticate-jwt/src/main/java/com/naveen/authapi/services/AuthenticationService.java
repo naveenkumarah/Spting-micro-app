@@ -5,6 +5,7 @@ import com.naveen.authapi.dtos.LoginUserDto;
 import com.naveen.authapi.dtos.RegisterUserDto;
 import com.naveen.authapi.entities.Role;
 import com.naveen.authapi.entities.User;
+import com.naveen.authapi.repositories.RoleRepository;
 import com.naveen.authapi.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,24 +23,25 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
+    private final RoleRepository roleRepository;
+
     public AuthenticationService(
-        UserRepository userRepository,
-        AuthenticationManager authenticationManager,
-        PasswordEncoder passwordEncoder
+            UserRepository userRepository,
+            AuthenticationManager authenticationManager,
+            PasswordEncoder passwordEncoder, RoleRepository roleRepository
     ) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     public User signup(RegisterUserDto input) {
-        Set<Role> roleSet =new HashSet<>();
-        roleSet.add(new Role("Admin"));
 
         var user =  User.builder().email(input.getEmail())
                 .fullName(input.getFullName())
                 .password(passwordEncoder.encode(input.getPassword()))
-                .roles(roleSet).build();
+                .roles(roleRepository.findAllByName(Role.roles.ADMIN)).build();
 
         return userRepository.save(user);
     }

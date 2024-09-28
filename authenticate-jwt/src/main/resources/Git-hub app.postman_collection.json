@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "3baa38d6-e917-4fd6-8fe1-d0ea15132d7b",
+		"name": "Git-hub app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "11578247"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"kumar@gmail.com\",\r\n    \"password\": \"Password\",\r\n    \"fullName\": \"Kumar\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8005/auth/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"kumar@gmail.com\",\r\n    \"password\": \"Password\",\r\n    \"fullName\": \"Kumar\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8005/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "me",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrdW1hckBnbWFpbC5jb20iLCJpYXQiOjE3Mjc1NDI0NDEsImV4cCI6MTcyNzYyODg0MX0.WLdLiExr6LqluKDIhejSJQd4PXzsnD_Im6wnvXRWSRA"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8005/users/me"
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrdW1hckBnbWFpbC5jb20iLCJpYXQiOjE3Mjc1NDI0NDEsImV4cCI6MTcyNzYyODg0MX0.WLdLiExr6LqluKDIhejSJQd4PXzsnD_Im6wnvXRWSRA"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8005/users/me"
+			},
+			"response": []
+		}
+	]
+}

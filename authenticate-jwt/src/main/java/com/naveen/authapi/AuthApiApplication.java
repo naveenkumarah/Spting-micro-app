@@ -36,8 +36,8 @@ public class AuthApiApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		Set<Role> roleSet = new HashSet<Role>(){{
-			add(new Role("Admin"));
-			add(new Role("User"));
+			add(new Role(Role.roles.ADMIN));
+			add(new Role(Role.roles.USER));
 		}};
 
 		roleRepository.saveAll(roleSet);
@@ -45,7 +45,7 @@ public class AuthApiApplication implements CommandLineRunner {
 		userRepository.save(User.builder().email("naveen@gmail.com")
 				.fullName("Naveen")
 				.password(passwordEncoder.encode("Password"))
-				.roles(roleRepository.findAllByName("Admin")).build());
+				.roles(roleRepository.findAllByName(Role.roles.ADMIN)).build());
 
 		userRepository.save(User.builder().email("kumar@gmail.com")
 				.fullName("Kumar")

@@ -37,11 +37,9 @@ public class UserController {
 
 
     @GetMapping
-    @PreAuthorize("hasAuthority('User')")
-   // @PostFilter()
-    public ResponseEntity<List<User>> allUsers() {
-        List <User> users = userService.allUsers();
-
-        return ResponseEntity.ok(users);
+    //@PreAuthorize("hasAuthority('User')")
+    @PostFilter("hasRole('USER') and filterObject.email == authentication.principal")
+    public List<User> allUsers() {
+        return userService.allUsers();
     }
 }

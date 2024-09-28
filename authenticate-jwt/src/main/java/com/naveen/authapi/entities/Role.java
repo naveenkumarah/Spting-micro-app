@@ -17,8 +17,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
-    public Role(String name){
+
+    public enum roles{
+    ADMIN,USER
+    }
+
+    @Enumerated(EnumType.STRING)
+    private roles name;
+    public Role(roles name){
         this.name=name;
     }
 }
