@@ -1,40 +1,43 @@
-server:
-  port: 9090
 spring:
+  application:
+    name: gateway
   cloud:
     gateway:
       default-filters:
-        - TokenRelay
-      routers:
-        - id: web
-          uri: http://localhost:9091
+        - TokenRelay=
+      routes:
+        - id: auth
+          uri: http://localhost:8083
           predicates:
-            - Path=/flowable-ui/**
+            - Path=/auth/**
+        - id: callme-service
+          uri: http://localhost:8040
+          predicates:
+            - Path=/callme/**
+        - id: caller-service
+          uri: http://localhost:8020
+          predicates:
+            - Path=/caller/**
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8083/auth/realms/My-Realm/protocol/openid-connect/certs
       client:
         provider:
-          my-keycloak-provider:
-            issuer-uri: http://localhost:8080/realms/My-Realm
-            # Individual properties can also be provided this way
-        #            token-uri: http://localhost:8080/auth/realms/amrutrealm/protocol/openid-connect/token
-        #            authorization-uri: http://localhost:8080/auth/realms/amrutrealm/protocol/openid-connect/auth
-        #            userinfo-uri: http://localhost:8080/auth/realms/amrutrealm/protocol/openid-connect/userinfo
-        #            user-name-attribute: preferred_username
+          keycloak:
+            issuer-uri: http://localhost:8083/auth/realms/My-Realm
         registration:
-          keycloak-spring-gateway-client:
-            provider: my-keycloak-provider
-            scope: openid
+          spring-with-test-scope:
+            provider: keycloak
             client-id: spring-gateway-client
             client-secret: 3RhEF8pqKTANrQ6BhfxaYVmcjTXsDK0u
             authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+            scope: openid
 
+server.port: 9090
 
-# Enable these to debug the Authorization flow
-logging:
-  level:
-    org:
-      springframework:
-        security:
-          web: DEBUG
+logging.level:
+  org.springframework.cloud.gateway: DEBUG
+  org.springframework.security: DEBUG
+  org.springframework.web.reactive.function.client: TRACE

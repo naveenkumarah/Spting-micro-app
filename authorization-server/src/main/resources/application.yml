@@ -12,6 +12,6 @@ keycloak:
   server:
     contextPath: /auth
     adminUser:
-      username: bael-admin
+      username: admin
       password: pass
-    realmImportFile: baeldung-realm.json
+    realmImportFile: naveen-realm.json
