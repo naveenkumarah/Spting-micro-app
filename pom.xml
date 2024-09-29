@@ -19,6 +19,7 @@
         <module>workflow</module>
         <module>gateway</module>
         <module>authenticate-jwt</module>
+        <module>authorization-server</module>
     </modules>
     <properties>
         <java.version>17</java.version>
