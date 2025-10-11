@@ -17,8 +17,10 @@
     <modules>
         <module>api-gateway</module>
         <module>workflow</module>
+        <module>identity-provider</module>
         <module>gateway</module>
-        <module>rule-engine</module>
+       <!-- <module>rule-engine</module>-->
+        <module>ai-chat</module>
         <!--<module>authenticate-jwt</module>
         <module>authorization-server</module>-->
     </modules>

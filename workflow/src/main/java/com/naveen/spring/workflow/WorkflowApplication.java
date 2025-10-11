@@ -3,19 +3,21 @@ package com.naveen.spring.workflow;
 import org.flowable.idm.api.IdmIdentityService;
 import org.flowable.idm.api.Privilege;
 import org.flowable.idm.api.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WorkflowApplication {
+public class WorkflowApplication{
     public static void main(String[] args) {
         SpringApplication.run(WorkflowApplication.class);
     }
 
-    /*
-    implements CommandLineRunner
+
+
+  /*  implements CommandLineRunner  @Autowired
     protected final IdmIdentityService idmIdentityService;
 
     public WorkflowApplication(IdmIdentityService idmIdentityService) {
